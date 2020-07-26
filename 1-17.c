@@ -1,29 +1,25 @@
 #include <stdio.h>
 #define MAXLINE 1000
+#define LOWER_BOUND 5
 
 int mygetline(char line[], int maxline);
 void copy(char to[], char from[]);
 
-/* print longest input line */
+/* Write a program to print all input lines that are longer than LOWER_BOUND characters */
 int main() {
 
     int len;
-    int max;
     char line[MAXLINE];
-    char longest[MAXLINE];
 
-    max = 0;
     while ((len = mygetline(line, MAXLINE)) > 0)
-        if (len > max) {
-            max = len;
-            copy(longest, line);
+        if (len > LOWER_BOUND) {
+            printf("%s", line);
         }
-    if (max > 0)
-        printf("%d %s", max, longest);
+
     return 0;
 }
 
-/* getline: read a line into s, return length */
+/* getline: use getchar to read a line into s, return length */
 int mygetline(char s[], int lim) {
     int c, i;
     // Q: Why do we make lim-2 the upper bound index?

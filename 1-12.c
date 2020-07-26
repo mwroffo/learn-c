@@ -3,7 +3,8 @@
 #define OUT 0
 #define IN 1
 
-main() {
+/* prints its input one word per line */
+int main() {
 
     int c, state;
     state = OUT;
@@ -14,12 +15,12 @@ main() {
                 putchar('\n');
             state = OUT;
         } else {
-            if (state == OUT)
-                state = IN;
+            state = IN;
             putchar(c);
         }
     }
 
+    return 0;
 }
 
 
