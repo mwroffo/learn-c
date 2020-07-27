@@ -2,26 +2,31 @@
 #define MAXLINE 1000
 
 int mygetline(char line[], int maxline);
-void repltabs(char line[], int len, int n);
+void reverse(char line[], int len);
 void swap(char v[], int i, int j);
 
 /* write a function reverse(s) that reverses that character string s. Use it to write a program that reverses its input a line at a time. */
 int main() {
-    int len, n;
+    int len;
     char line[MAXLINE];
 
-    n = 4; /* blanks per tab */
     while ((len = mygetline(line, MAXLINE)) > 0) {
-        repltabs(line, len, n);
+        reverse(line, len);
         printf("%s", line);
     }
 
     return 0;
 }
 
-/* repltabs(s): given a string, replace its tabs with n blanks */
-void repltabs(char s[], int len, int n) {
-
+/* reverse(s): given a string, reverse its order */
+void reverse(char s[], int len) {
+    int low, high;
+     
+    low = 0;
+    high = len - 2; /* begin before the newline char */
+    while (low < high) {
+        swap(s, low++, high--);
+    }
 }
 
 /* getline: use getchar to read a line into s, return length */
