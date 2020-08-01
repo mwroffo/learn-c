@@ -3,7 +3,8 @@
 
 int mygetline(char line[], int maxline);
 int insert(char line[], char x, int l, int len);
-void repltabs(char line[], int len, int n);
+int myremove(char line[], int l, int len);
+void replspaces(char line[], int len, int n);
 
 /* write a program that replaces tabs with the proper number of blanks to space to
  * the next tab stop, say every n columns. */
@@ -13,29 +14,37 @@ int main() {
 
     n = 4; /* blanks per tab */
     while ((len = mygetline(line, MAXLINE)) > 0) {
-        repltabs(line, len, n);
+        replspaces(line, len, n);
         printf("%s", line);
     }
 
     return 0;
 }
 
-/* repltabs(s): given a string, replace its tabs with n blanks */
-void repltabs(char s[], int len, int n) {
-    int i, j;
-    char blank = 'X';
+/* replspaces: given a string, replace spaces with the min num of tabs + necessary spaces */
+void replspaces(char s[], int len, int n) {
+    int i, j, count;
+    char tab = 'X';
 
+    count = 0;
     for (i = 0; i < len; ++i) {
-        if (s[i] == '\t') {
-            s[i] = blank;
-            for (j = 1; j <= n-1; ++j) {
-                len = insert(s, blank, i, len);
+        if (s[i] == ' ')
+            ++count;
+        else count = 0; 
+        if (count == n) {
+            for (j = 1; j <= n; ++j) {
+                len = myremove(s, i-(n-1), len);
+                 
+                //printf("%s", s);
             }
+            len = insert(s, tab, i-(n-1), len);
+            count = 0;
+            i = 0;
         }
     }
 }
 
-/* getline: use getchar to read a line into s, return length */
+/* getline: use getchar to read a line into s, return length which includes newline char */
 int mygetline(char s[], int lim) {
     int c, i;
     // Q: Why do we make lim-2 the upper bound index?
@@ -57,8 +66,8 @@ int mygetline(char s[], int lim) {
 /* insert: given string s with length len, insert char x at index l, and return new len */
 int insert(char s[], char x, int l, int len) {
     if (l < 0 || l >= len) {
-        printf("insert: bad arg\n");
-        return 0;
+        printf("insert: bad arg: l=%d, len=%d\n", l, len);
+        return -1;
     } 
     int high, i;
     s[len+1] = '\0'; // advance null ch to enlarge array
@@ -66,5 +75,19 @@ int insert(char s[], char x, int l, int len) {
         s[i] = s[i-1];
     }
     s[l] = x;
-    return len+1;
+    return len + 1;
+}
+
+/* remove: given string s, remove the element at index l and return the new length */
+int myremove(char s[], int l, int len) {
+    if (len == 0 || l < 0 || l >= len) {
+        printf("remove: bad arg, index out of bounds\n");
+        return -1;
+    }
+    
+    int i;
+    for (i = l; i <= len-1; ++i) {
+        s[i] = s[i+1];
+    }
+    return len - 1;
 }
