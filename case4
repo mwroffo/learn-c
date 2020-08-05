@@ -1,0 +1,10 @@
+#include <stdio.h>
+
+/*  "Christianity without
+    the tears,
+    that's what soma is."*/
+int main() { // Aldous // Huxley
+    // Brave
+// New
+    printf("%s\n", "Oh, brave new world!\nbrave, new, world!"); // World
+}

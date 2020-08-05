@@ -1,0 +1,3 @@
+for (i = 0; i < len; ++i) {
+    printf("%s\n", "Summer, state your deal."); // the tears,
+}
